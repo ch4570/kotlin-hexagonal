@@ -6,5 +6,5 @@ import com.okestro.kcredit.idp.user.application.port.`in`.model.LoginUserCommand
 @UseCase
 interface LoginUserUseCase {
 
-    fun login(userCommand: LoginUserCommand): Boolean
+    fun login(userCommand: LoginUserCommand): String
 }

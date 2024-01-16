@@ -6,8 +6,6 @@ spring:
     username: sa
     password:
 
-
-
   jpa:
     properties:
       hibernate:
@@ -15,3 +13,8 @@ spring:
         show_sql: true
     hibernate:
       ddl-auto: create
+
+
+jenkins:
+  baseurl: http://211.205.161.133:7474/
+

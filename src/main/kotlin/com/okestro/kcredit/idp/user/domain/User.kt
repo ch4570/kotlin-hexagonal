@@ -6,8 +6,7 @@ class User(
     var loginPassword: String,
     var name: String,
     var department: String,
-    val group: MutableList<String>,
-    val role: MutableList<String>
+    val role: Role
 ) {
 
     fun updateUser(loginPassword: String, name: String, department: String) {

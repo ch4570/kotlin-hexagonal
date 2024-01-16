@@ -1,11 +1,8 @@
 package com.okestro.kcredit.idp.user.adapter.out.persistence.entity
 
-import com.okestro.kcredit.idp.user.application.port.`in`.model.ModifyUserCommand
-import jakarta.persistence.Column
-import jakarta.persistence.Entity
-import jakarta.persistence.GeneratedValue
-import jakarta.persistence.GenerationType
-import jakarta.persistence.Id
+
+import com.okestro.kcredit.idp.user.domain.Role
+import jakarta.persistence.*
 
 @Entity
 data class UserJpaEntity(
@@ -23,10 +20,9 @@ data class UserJpaEntity(
    val userName: String,
 
     @Column(name = "DEPARTMENT")
-    val department: String
-) {
+    val department: String,
 
-    fun updateUser() {
-
-    }
-}
+    @Enumerated(EnumType.STRING)
+    @Column(name = "USER_ROLE")
+    val role: Role
+)

@@ -13,8 +13,7 @@ class UserMapper {
             loginPassword = userJpaEntity.loginPassword,
             name = userJpaEntity.userName,
             department = userJpaEntity.department,
-            group = mutableListOf(""),
-            role = mutableListOf("")
+            role = userJpaEntity.role
         )
 
     fun domainToJpaEntity(userId: Long, user: User) =
@@ -23,7 +22,8 @@ class UserMapper {
             loginId = user.loginId,
             loginPassword = user.loginPassword,
             userName = user.name,
-            department = user.department
+            department = user.department,
+            role = user.role
         )
 
 }
