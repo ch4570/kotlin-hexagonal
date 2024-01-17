@@ -1,4 +1,4 @@
-package com.okestro.kcredit.idp.cd.application.port.`in`
+package com.okestro.kcredit.idp.cd.application.port.`in`.usecase
 
 import com.okestro.kcredit.idp.common.annotation.UseCase
 

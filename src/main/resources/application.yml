@@ -14,12 +14,10 @@ spring:
     hibernate:
       ddl-auto: create
   config:
-    import: classpath:gitlab-secret-key.yml
+    import: classpath:gitlab-secret-key.yml, classpath:argo-cd.yml
 
 
 jenkins:
   baseUrl: http://211.205.161.133:7474/
   token: 111184d48b4fa2f1995724a4df2be59370
   id: admin
-
-

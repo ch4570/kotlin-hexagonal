@@ -34,6 +34,7 @@ class SecurityConfig(
             .authorizeHttpRequests {
                 request ->
                 request.requestMatchers("/api/gitlab/**").permitAll()
+                request.requestMatchers("/api/v1/**").permitAll()
                 request.requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                 request.requestMatchers("/api/users").hasRole("INTEGRATE_ADMIN")
                 request.requestMatchers("/api/jenkins/**").hasAnyRole("INTEGRATE_ADMIN", "DEVELOPER")
