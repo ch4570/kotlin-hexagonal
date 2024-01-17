@@ -7,6 +7,7 @@ plugins {
 	kotlin("plugin.spring") version "1.9.21"
 	kotlin("plugin.jpa") version "1.9.21"
 	kotlin("kapt") version "1.8.22"
+	kotlin("plugin.serialization") version "1.5.21"
 }
 
 group = "com.okestro.kcredit"
@@ -44,6 +45,9 @@ dependencies {
 	implementation("org.springframework.cloud:spring-cloud-starter-openfeign")
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("io.jsonwebtoken:jjwt-api:0.11.5")
+
+	implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.1")
+
 	runtimeOnly("io.jsonwebtoken:jjwt-impl:0.11.5")
 	runtimeOnly("io.jsonwebtoken:jjwt-jackson:0.11.5")
 
