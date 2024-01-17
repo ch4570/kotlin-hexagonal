@@ -5,6 +5,7 @@ import com.okestro.kcredit.idp.user.application.port.`in`.usecase.RegisterUserUs
 import com.okestro.kcredit.idp.user.domain.Role
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.EnableConfigurationProperties
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 import org.springframework.cloud.openfeign.EnableFeignClients
@@ -22,7 +23,7 @@ class IdpApplication(
 				name = "Kyung Hoon, Cho",
 				loginId = "Josh",
 				loginPassword = "5555",
-				department = "Platform Service Dev 77",
+				department = "People & Culture",
 				role = Role.INTEGRATE_ADMIN
 			)
 		)
