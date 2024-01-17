@@ -21,7 +21,7 @@ class IdpApplication(
 				name = "Kyung Hoon, Cho",
 				loginId = "Josh",
 				loginPassword = "5555",
-				department = "Platform Service Dev 77",
+				department = "People & Culture",
 				role = Role.INTEGRATE_ADMIN
 			)
 		)

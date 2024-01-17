@@ -33,10 +33,10 @@ class SecurityConfig(
                 sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
             .authorizeHttpRequests {
                 request ->
-                request.requestMatchers("/**").permitAll()
-//                request.requestMatchers(HttpMethod.POST, "/api/login").permitAll()
-//                request.requestMatchers("/api/users").hasRole("INTEGRATE_ADMIN")
-//                request.requestMatchers("/api/jenkins/**").hasAnyRole("INTEGRATE_ADMIN", "DEVELOPER")
+                request.requestMatchers("/api/gitlab/**").permitAll()
+                request.requestMatchers(HttpMethod.POST, "/api/login").permitAll()
+                request.requestMatchers("/api/users").hasRole("INTEGRATE_ADMIN")
+                request.requestMatchers("/api/jenkins/**").hasAnyRole("INTEGRATE_ADMIN", "DEVELOPER")
                 request.anyRequest().authenticated() }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter::class.java)
