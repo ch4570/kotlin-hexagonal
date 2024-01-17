@@ -2,9 +2,7 @@ package com.okestro.kcredit.idp.cd.application.service
 
 import com.okestro.kcredit.idp.cd.application.port.`in`.usecase.LoadApplicationUseCase
 import com.okestro.kcredit.idp.cd.application.port.out.LoadApplicationPort
-import org.springframework.http.HttpMethod
 import org.springframework.stereotype.Service
-import org.springframework.web.client.RestClient
 
 @Service
 class LoadApplicationService(
