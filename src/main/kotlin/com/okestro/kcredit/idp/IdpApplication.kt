@@ -5,9 +5,11 @@ import com.okestro.kcredit.idp.user.application.port.`in`.usecase.RegisterUserUs
 import com.okestro.kcredit.idp.user.domain.Role
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
 
 @SpringBootApplication
+@ConfigurationPropertiesScan
 class IdpApplication(
 	private val registerUserUseCase: RegisterUserUseCase
 ) : CommandLineRunner {

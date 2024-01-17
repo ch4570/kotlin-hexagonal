@@ -16,5 +16,7 @@ spring:
 
 
 jenkins:
-  baseurl: http://211.205.161.133:7474/
+  baseUrl: http://211.205.161.133:7474/
+  token: 111184d48b4fa2f1995724a4df2be59370
+  id: admin
 
