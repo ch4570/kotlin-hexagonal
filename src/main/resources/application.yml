@@ -13,8 +13,11 @@ spring:
         show_sql: true
     hibernate:
       ddl-auto: create
+  config:
+    import: classpath:gitlab-secret-key.yml
 
 
 jenkins:
   baseurl: http://211.205.161.133:7474/
+
 
