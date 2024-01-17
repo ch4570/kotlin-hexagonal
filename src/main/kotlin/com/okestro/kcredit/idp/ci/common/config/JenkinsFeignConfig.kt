@@ -1,6 +1,6 @@
-package com.okestro.kcredit.idp.common.config
+package com.okestro.kcredit.idp.ci.common.config
 
-import com.okestro.kcredit.idp.common.properties.JenkinsProperties
+import com.okestro.kcredit.idp.ci.common.properties.JenkinsProperties
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
 

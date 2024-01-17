@@ -1,4 +1,4 @@
-package com.okestro.kcredit.idp.common.properties
+package com.okestro.kcredit.idp.ci.common.properties
 
 import org.springframework.boot.context.properties.ConfigurationProperties
 
