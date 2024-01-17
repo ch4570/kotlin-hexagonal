@@ -12,7 +12,6 @@ import com.okestro.kcredit.idp.user.application.port.out.ModifyUserPort
 import com.okestro.kcredit.idp.user.application.port.out.RegisterUserPort
 import com.okestro.kcredit.idp.user.application.port.out.RemoveUserPort
 import com.okestro.kcredit.idp.user.application.port.out.RevertUserPasswordPort
-import com.okestro.kcredit.idp.user.domain.Role
 import com.okestro.kcredit.idp.user.domain.User
 
 @PersistenceAdapter

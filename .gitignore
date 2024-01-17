@@ -2,6 +2,7 @@
 .idea
 **/build/
 !src/**/build/
+/src/main/resources/gitlab-secret-key.yml
 
 # Ignore Gradle GUI config
 gradle-app.setting
