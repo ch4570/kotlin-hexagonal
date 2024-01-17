@@ -1,16 +1,18 @@
 package com.okestro.kcredit.idp
 
-import com.okestro.kcredit.idp.common.config.GitlabProperties
 import com.okestro.kcredit.idp.user.application.port.`in`.model.RegisterUserCommand
 import com.okestro.kcredit.idp.user.application.port.`in`.usecase.RegisterUserUseCase
 import com.okestro.kcredit.idp.user.domain.Role
 import org.springframework.boot.CommandLineRunner
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.EnableConfigurationProperties
+import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.runApplication
+import org.springframework.cloud.openfeign.EnableFeignClients
 
+@EnableFeignClients
 @SpringBootApplication
-@EnableConfigurationProperties(GitlabProperties::class)
+@ConfigurationPropertiesScan
 class IdpApplication(
 	private val registerUserUseCase: RegisterUserUseCase
 ) : CommandLineRunner {
