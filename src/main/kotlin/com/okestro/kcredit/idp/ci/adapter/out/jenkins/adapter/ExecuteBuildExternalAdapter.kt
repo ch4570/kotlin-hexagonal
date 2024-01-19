@@ -6,22 +6,24 @@ import com.okestro.kcredit.idp.ci.common.properties.JenkinsProperties
 import com.okestro.kcredit.idp.ci.common.util.JenkinsClientProvider
 import com.okestro.kcredit.idp.common.exception.CustomException
 import com.okestro.kcredit.idp.common.exception.ErrorCode.*
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
-import org.springframework.web.client.RestTemplate
+import org.springframework.http.HttpHeaders
+import org.springframework.web.client.RestClient
 
 @ExternalSystemAdapter
 class ExecuteBuildExternalAdapter(
-    private val restTemplate: RestTemplate,
+    private val restClient: RestClient,
     private val jenkinsProperties: JenkinsProperties
 ) : ExecuteBuildPort {
 
     override fun executeBuild(jobName: String) {
-        val authHeader = JenkinsClientProvider.createJenkinsAuthHeader(jenkinsProperties.id, jenkinsProperties.token)
-
-        val status = restTemplate.exchange("${jenkinsProperties.baseUrl}/job/$jobName/build", HttpMethod.POST,
-            HttpEntity<String>(authHeader),String::class.java)
+        val status = restClient
+            .post()
+            .uri("${jenkinsProperties.baseUrl}/job/$jobName/build")
+            .header(HttpHeaders.AUTHORIZATION, JenkinsClientProvider.createBasicAuth(jenkinsProperties.id, jenkinsProperties.token))
+            .retrieve()
+            .toBodilessEntity()
             .statusCode.value()
+
 
         if (status != 201) throw CustomException(JENKINS_BUILD_FAIL)
     }

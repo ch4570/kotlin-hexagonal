@@ -19,3 +19,7 @@ Esrc/main/kotlin/com/okestro/kcredit/idp/common/exception/ErrorCode.kt,6/4/647c
 Ssrc/main/kotlin/com/okestro/kcredit/idp/ci/adapter/in/web/ExecuteBuildController.kt,6/d/6d14170c27231a4385e3799de9d2be90137764fc
 ƒ
 Ssrc/main/kotlin/com/okestro/kcredit/idp/ci/adapter/in/web/LoadPipeLineController.kt,9/c/9cf25eba6a4ea97dfd687517954e903ba861ada2
+…
+Usrc/main/kotlin/com/okestro/kcredit/idp/ci/adapter/out/jenkins/adapter/FeignClient.kt,f/8/f8d6c6f80955c8e4dcd2cdeec5e69ec5efe6243e
+y
+Isrc/main/kotlin/com/okestro/kcredit/idp/common/config/RestClientConfig.kt,4/e/4e63b38240d495c44726308c2d97776b3b8d0eb3
