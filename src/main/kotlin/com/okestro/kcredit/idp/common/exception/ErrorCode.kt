@@ -11,5 +11,6 @@ enum class ErrorCode(
     USER_NOT_FOUND(HttpStatus.BAD_REQUEST, "ERROR_01", "해당하는 회원이 없습니다. 확인 후 다시 시도해주시기 바랍니다."),
     LOGIN_INVALID(HttpStatus.BAD_REQUEST, "ERROR_02", "아이디 또는 비밀번호를 잘못 입력했습니다. 확인 후 다시 시도해주시기 바랍니다."),
     INVALID_TOKEN(HttpStatus.BAD_REQUEST, "ERROR_03", "유효하지 않은 토큰입니다. 확인 후 다시 시도해주시기 바랍니다."),
-    JENKINS_NO_DATA(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_04", "조회 된 파이프라인이 없습니다. 확인 후 다시 시도해주시기 바랍니다.")
+    JENKINS_NO_DATA(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_04", "조회 된 파이프라인이 없습니다. 확인 후 다시 시도해주시기 바랍니다."),
+    JENKINS_BUILD_FAIL(HttpStatus.INTERNAL_SERVER_ERROR, "ERROR_05", "Jenkins Build 요청이 실패했습니다. 확인 후 다시 시도해주시기 바랍니다.")
 }
