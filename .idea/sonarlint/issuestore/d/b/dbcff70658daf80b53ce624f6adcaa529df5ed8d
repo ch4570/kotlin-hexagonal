@@ -1,6 +1,13 @@
 
+<<<<<<< HEAD
 ?kotlin:S6624/" Do not hardcode version numbers.(νίι8θέÒΎΡ1
 >kotlin:S66241" Do not hardcode version numbers.(Ε•K8κέÒΎΡ1
 Dkotlin:S66243" Do not hardcode version numbers.(Κ°φϋÿÿÿÿ8λέÒΎΡ1
 ?kotlin:S66244" Do not hardcode version numbers.(ηξλ–8μέÒΎΡ1
 Lkotlin:S6629'"(Group dependencies by their destination.(«±°Άωÿÿÿÿ8οέÒΎΡ1
+=======
+?kotlin:S6624." Do not hardcode version numbers.(νίι8ΆέªΣΡ1
+Dkotlin:S6624/" Do not hardcode version numbers.(Κ°φϋÿÿÿÿ8ΆέªΣΡ1
+?kotlin:S66240" Do not hardcode version numbers.(ηξλ–8ΆέªΣΡ1
+Lkotlin:S6629&"(Group dependencies by their destination.(«±°Άωÿÿÿÿ8¤έªΣΡ1
+>>>>>>> f671303 (git μ¶©λ ν•΄κ²° μ¤‘ #1)

@@ -26,9 +26,9 @@ class JwtExceptionFilter(
             response.status = 401
             response.contentType = MediaType.APPLICATION_JSON_VALUE
             response.characterEncoding = "UTF-8"
-            objectMapper.writeValue(response.writer, ErrorResponse(
-                e.errorCode.serial, e.errorCode.message
-            ))
+            objectMapper.writeValue(response.writer,
+                ErrorResponse(e.errorCode.serial, e.errorCode.message)
+            )
         }
     }
 }

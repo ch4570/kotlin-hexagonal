@@ -8,7 +8,7 @@ class UserPasswordCrypto(
     private val passwordEncoder: PasswordEncoder
 ) {
 
-    fun encryptPassword(plainText: String) =
+    fun encryptPassword(plainText: String): String =
         passwordEncoder.encode(plainText)
 
     fun checkPassword(plainPassword: String, encryptPassword: String) =
