@@ -6,7 +6,6 @@ import com.okestro.kcredit.idp.common.exception.ErrorCode.*
 import com.okestro.kcredit.idp.user.adapter.out.persistence.mapper.UserMapper
 import com.okestro.kcredit.idp.user.adapter.out.persistence.repository.UserRepository
 import com.okestro.kcredit.idp.user.application.port.out.LoadUserPort
-import com.okestro.kcredit.idp.user.domain.User
 
 @PersistenceAdapter
 class UserQueryPersistenceAdapter(

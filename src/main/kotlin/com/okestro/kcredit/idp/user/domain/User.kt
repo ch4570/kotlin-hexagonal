@@ -1,7 +1,7 @@
 package com.okestro.kcredit.idp.user.domain
 
 
-class User(
+data class User(
     val loginId: String,
     var loginPassword: String,
     var name: String,
