@@ -12,7 +12,7 @@ import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
 import io.mockk.verify
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -77,7 +77,7 @@ class ModifyUserUseCaseTest {
 
 
         // then
-        Assertions.assertThat(expectedResult).isEqualTo(expectedResult)
+        assertThat(expectedResult).isEqualTo(expectedResult)
         verify(exactly = 1) { loadUserUseCase.loadUserById(1L) }
         verify(exactly = 2) { userPasswordCrypto.encryptPassword("1234") }
     }

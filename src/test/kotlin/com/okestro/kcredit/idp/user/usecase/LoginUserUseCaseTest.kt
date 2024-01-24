@@ -12,9 +12,8 @@ import io.mockk.every
 import io.mockk.impl.annotations.InjectMockKs
 import io.mockk.impl.annotations.MockK
 import io.mockk.junit5.MockKExtension
-import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.Assertions
+import org.assertj.core.api.Assertions.*
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 
@@ -58,7 +57,7 @@ class LoginUserUseCaseTest {
         val expectedResult = loginUserUseCase.login(loginUserCommand)
 
         // then
-        Assertions.assertThat(expectedResult).isEqualTo("generatedToken")
+        assertThat(expectedResult).isEqualTo("generatedToken")
         verify(exactly = 1) { passwordCrypto.checkPassword("1234", "encryptedPassword") }
         verify(exactly = 1) { jwtUtil.generateToken("Josh", Role.DEVELOPER) }
         verify(exactly = 1) { loadUserUseCase.loadUserByLoginId("Josh") }
@@ -84,7 +83,7 @@ class LoginUserUseCaseTest {
         every { loadUserUseCase.loadUserByLoginId(loginUserCommand.loginId) } returns expectedUser
 
         // when
-        val exception = Assertions.assertThatThrownBy { loginUserUseCase.login(loginUserCommand) }
+        val exception = assertThatThrownBy { loginUserUseCase.login(loginUserCommand) }
 
         // then
         exception.isInstanceOf(CustomException::class.java)
