@@ -2,34 +2,29 @@ package com.okestro.kcredit.idp.user.usecase
 
 import com.okestro.kcredit.idp.user.application.port.out.RemoveUserPort
 import com.okestro.kcredit.idp.user.application.service.RemoveUserService
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.Assertions.*
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
-class RemoveUserUseCaseTest {
 
-    @MockK
-    private lateinit var removeUserPort: RemoveUserPort
+class RemoveUserUseCaseTest : BehaviorSpec({
 
-    @InjectMockKs
-    private lateinit var removeUserUseCase: RemoveUserService
+    val removeUserPort = mockk<RemoveUserPort>()
+    val removeUserUseCase = RemoveUserService(removeUserPort)
 
-    @Test
-    fun `회원 삭제 테스트`() {
-        // given
-        every { removeUserPort.removeUserById(1L) } returns Unit
+    Given("관리자가 정상 가입된 회원을 삭제하려고 하는 상황에서") {
+        val userId = 1L
+        every { removeUserPort.removeUserById(userId) } returns Unit
 
-        // when
-        val expected = removeUserUseCase.removeUserById(1L)
+        When("회원의 PK로 회원 삭제를 시도하면") {
+            val expectedResult = removeUserUseCase.removeUserById(userId)
 
-        // then
-        assertThat(expected).isEqualTo(Unit)
-        verify(exactly = 1) { removeUserPort.removeUserById(1L) }
+            Then("회원 삭제가 성공해야 한다") {
+                expectedResult shouldBe Unit
+                verify(exactly = 1) { removeUserPort.removeUserById(userId) }
+            }
+        }
     }
-}
+})

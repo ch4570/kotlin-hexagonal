@@ -3,7 +3,6 @@ package com.okestro.kcredit.idp.user.adapter.out.persistence.adapter.command
 import com.okestro.kcredit.idp.common.annotation.PersistenceAdapter
 import com.okestro.kcredit.idp.common.exception.CustomException
 import com.okestro.kcredit.idp.common.exception.ErrorCode.*
-import com.okestro.kcredit.idp.common.utils.UserPasswordCrypto
 import com.okestro.kcredit.idp.user.adapter.out.persistence.entity.UserJpaEntity
 import com.okestro.kcredit.idp.user.adapter.out.persistence.mapper.UserMapper
 import com.okestro.kcredit.idp.user.adapter.out.persistence.repository.UserRepository
@@ -13,19 +12,20 @@ import com.okestro.kcredit.idp.user.application.port.out.RegisterUserPort
 import com.okestro.kcredit.idp.user.application.port.out.RemoveUserPort
 import com.okestro.kcredit.idp.user.application.port.out.RevertUserPasswordPort
 import com.okestro.kcredit.idp.user.domain.User
+import org.springframework.security.crypto.password.PasswordEncoder
 
 @PersistenceAdapter
 class UserCommandPersistenceAdapter(
     private val userRepository: UserRepository,
     private val userMapper: UserMapper,
-    private val passwordCrypto: UserPasswordCrypto
+    private val passwordCrypto: PasswordEncoder
 ) : RegisterUserPort, ModifyUserPort,
     RemoveUserPort, RevertUserPasswordPort {
 
     override fun registerUser(userCommand: RegisterUserCommand) : User {
         val userJpaEntity = UserJpaEntity(
             loginId = userCommand.loginId,
-            loginPassword = passwordCrypto.encryptPassword(userCommand.loginPassword),
+            loginPassword = passwordCrypto.encode(userCommand.loginPassword),
             userName = userCommand.name,
             department = userCommand.department,
             role = userCommand.role

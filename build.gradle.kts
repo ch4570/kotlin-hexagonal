@@ -57,7 +57,18 @@ dependencies {
 
 	runtimeOnly("com.h2database:h2")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
+
+
+	// Kotest
+	testImplementation("io.kotest:kotest-runner-junit5:5.4.2")
+	testImplementation("io.kotest:kotest-assertions-core:5.4.2")
+	testImplementation("io.kotest.extensions:kotest-extensions-spring:1.1.2")
+
+	// Mockk
 	testImplementation("io.mockk:mockk:1.12.0")
+
+	// Kotlin Test Fixture
+	testImplementation ("com.appmattus.fixture:fixture:1.2.0")
 }
 
 dependencyManagement {

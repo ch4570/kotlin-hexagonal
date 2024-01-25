@@ -1,64 +1,48 @@
 package com.okestro.kcredit.idp.user.usecase
 
-import com.okestro.kcredit.idp.common.utils.UserPasswordCrypto
 import com.okestro.kcredit.idp.user.application.port.`in`.model.RegisterUserCommand
 import com.okestro.kcredit.idp.user.application.port.out.RegisterUserPort
 import com.okestro.kcredit.idp.user.application.service.RegisterUserService
-import com.okestro.kcredit.idp.user.domain.Role
+import com.okestro.kcredit.idp.user.domain.Role.*
 import com.okestro.kcredit.idp.user.domain.User
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.Assertions.*
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
-
-@ExtendWith(MockKExtension::class)
-class RegisterUserUseCaseTest {
 
 
-    @MockK
-    private lateinit var registerUserPort: RegisterUserPort
+class RegisterUserUseCaseTest : BehaviorSpec({
 
-    @MockK
-    private lateinit var passwordCrypto: UserPasswordCrypto
+    val registerUserPort = mockk<RegisterUserPort>()
+    val registerUserUseCase = RegisterUserService(registerUserPort)
 
-    @InjectMockKs
-    private lateinit var registerUserUseCase: RegisterUserService
-
-    @Test
-    fun `관리자 회원 가입 테스트`() {
-        // given
+    Given("회원이 회원 가입하려는 상황에서") {
         val userCommand = RegisterUserCommand(
-            loginId = "Josh",
+            loginId = "OkestroUser",
             loginPassword = "1234",
-            name = "person1",
-            department = "People & Culture",
-            role = Role.DEVELOPER
+            name = "Person",
+            department = "Platform Service Dev 7",
+            role = DEVELOPER
         )
-
-        // PasswordEncoder Stubbing
-        every { passwordCrypto.encryptPassword("1234")} returns "encryptedPassword"
 
         val expectedUser = User(
-            loginId = "Josh",
-            loginPassword = passwordCrypto.encryptPassword("1234"),
-            name = "person1",
-            department = "People & Culture",
-            role = Role.DEVELOPER
+            loginId = "OkestroUser",
+            loginPassword = "encryptedPassword",
+            name = "Person",
+            department = "Platform Service Dev 7",
+            role = DEVELOPER
         )
 
-        // RegisterUserPort Stubbing
         every { registerUserPort.registerUser(userCommand) } returns expectedUser
 
+        When("회원 가입에 필요한 정보를 전송하면") {
+            val expectedResult = registerUserUseCase.registerUser(userCommand)
 
-        // when
-        val expectedResult = registerUserUseCase.registerUser(userCommand)
-
-        // then
-        assertThat(expectedResult).isEqualTo(expectedUser)
-        verify { passwordCrypto.encryptPassword("1234") }
+            Then("회원 가입이 성공해야 한다") {
+                expectedUser shouldBe expectedResult
+                verify(exactly = 1) { registerUserPort.registerUser(userCommand) }
+            }
+        }
     }
-}
+})

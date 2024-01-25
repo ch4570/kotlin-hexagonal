@@ -9,6 +9,8 @@ import jakarta.servlet.http.HttpServletRequest
 import jakarta.servlet.http.HttpServletResponse
 import org.springframework.http.MediaType
 import org.springframework.web.filter.OncePerRequestFilter
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
 
 @Filter
 class JwtExceptionFilter(
@@ -27,7 +29,10 @@ class JwtExceptionFilter(
             response.contentType = MediaType.APPLICATION_JSON_VALUE
             response.characterEncoding = "UTF-8"
             objectMapper.writeValue(response.writer,
-                ErrorResponse(e.errorCode.serial, e.errorCode.message)
+                ErrorResponse(
+                    serial = e.errorCode.serial,
+                    message = e.errorCode.message,
+                    timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss")))
             )
         }
     }

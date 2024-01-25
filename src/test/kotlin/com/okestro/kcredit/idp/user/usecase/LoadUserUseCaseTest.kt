@@ -1,129 +1,107 @@
 package com.okestro.kcredit.idp.user.usecase
 
+import com.appmattus.kotlinfixture.kotlinFixture
 import com.okestro.kcredit.idp.common.exception.CustomException
-import com.okestro.kcredit.idp.common.exception.ErrorCode
+import com.okestro.kcredit.idp.common.exception.ErrorCode.*
 import com.okestro.kcredit.idp.user.application.port.out.LoadUserPort
 import com.okestro.kcredit.idp.user.application.service.LoadUserService
-import com.okestro.kcredit.idp.user.domain.Role
 import com.okestro.kcredit.idp.user.domain.User
+import io.kotest.assertions.throwables.shouldThrow
+import io.kotest.core.spec.IsolationMode
+import io.kotest.core.spec.style.BehaviorSpec
+import io.kotest.matchers.shouldBe
 import io.mockk.every
-import io.mockk.impl.annotations.InjectMockKs
-import io.mockk.impl.annotations.MockK
-import io.mockk.junit5.MockKExtension
+import io.mockk.mockk
 import io.mockk.verify
-import org.assertj.core.api.Assertions.*
-import org.junit.jupiter.api.Test
-import org.junit.jupiter.api.extension.ExtendWith
 
-@ExtendWith(MockKExtension::class)
-class LoadUserUseCaseTest {
 
-    @MockK
-    private lateinit var loadUserPort: LoadUserPort
+class LoadUserUseCaseTest : BehaviorSpec({
 
-    @InjectMockKs
-    private lateinit var loadUserUseCase: LoadUserService
+    isolationMode = IsolationMode.InstancePerTest
 
-    @Test
-    fun `사용자 PK로 사용자 조회 테스트`() {
-        // given
-        val expectedUser = User(
-            loginId = "Josh",
-            loginPassword = "encryptedPassword",
-            name = "person1",
-            department = "People & Culture",
-            role = Role.DEVELOPER
-        )
+    val fixture = kotlinFixture()
+    val loadUserPort = mockk<LoadUserPort>()
+    val loadUserUseCase = LoadUserService(loadUserPort)
 
-        every { loadUserPort.loadUserById(1L) } returns expectedUser
+    Given("현재 가입되어 있는 사용자를 PK로 조회하려는 상황에서") {
+        val userId = 1L
+        val expectedUser = fixture<User>()
 
-        // when
-        val expectedResult = loadUserUseCase.loadUserById(1L)
+        every { loadUserPort.loadUserById(userId) } returns expectedUser
 
-        // then
-        assertThat(expectedResult).isEqualTo(expectedUser)
-        verify(exactly = 1) { loadUserPort.loadUserById(1L) }
+        When("존재하는 사용자의 PK로 조회를 시도하면") {
+            val expectedResult = loadUserUseCase.loadUserById(userId)
+
+            Then("해당 PK와 일치하는 사용자가 조회되어야 한다") {
+                expectedUser shouldBe expectedResult
+                verify(exactly = 1) { loadUserPort.loadUserById(userId) }
+            }
+        }
     }
 
-    @Test
-    fun `사용자 전체 조회 테스트`() {
-        // given
+    Given("사용자를 전체 조회하려는 상황에서") {
         val expectedUserList = listOf(
-            User(loginId = "Josh",
-                loginPassword = "encryptedPassword",
-                name = "person1",
-                department = "People & Culture",
-                role = Role.DEVELOPER),
-            User(loginId = "Rex",
-                loginPassword = "encryptedPassword",
-                name = "person2",
-                department = "GA",
-                role = Role.INTEGRATE_ADMIN),
-            User(loginId = "Lauren",
-                loginPassword = "encryptedPassword",
-                name = "person3",
-                department = "Clean Team",
-                role = Role.DEVELOPER),
+            fixture<User>(),
+            fixture<User>(),
+            fixture<User>()
         )
 
         every { loadUserUseCase.loadAllUsers() } returns expectedUserList
 
-        // when
-        val expectedResult = loadUserUseCase.loadAllUsers()
+        When("조회를 시도하면") {
+            val expectedResult = loadUserUseCase.loadAllUsers()
 
-        // then
-        assertThat(expectedUserList).isEqualTo(expectedResult)
-        verify(exactly = 1) { loadUserPort.loadAllUsers() }
+            Then("사용자의 전체 목록이 조회되어야 한다") {
+                expectedUserList shouldBe expectedResult
+                verify(exactly = 1) { loadUserPort.loadAllUsers() }
+            }
+        }
     }
 
-    @Test
-    fun `사용자 로그인 아이디로 사용자 조회 테스트`() {
-        // given
-        val expectedUser = User(
-            loginId = "Josh",
-            loginPassword = "encryptedPassword",
-            name = "person1",
-            department = "People & Culture",
-            role = Role.DEVELOPER
-        )
+    Given("현재 가입되어 있는 사용자를 아이디로 조회하려는 상황에서") {
+        val expectedUser = fixture<User>()
 
         every { loadUserPort.loadUserByLoginId(expectedUser.loginId) } returns expectedUser
 
-        // when
-        val expectedResult = loadUserUseCase.loadUserByLoginId(expectedUser.loginId)
+        When("사용자 아이디로 회원 조회를 시도하면") {
+            val expectedResult = loadUserUseCase.loadUserByLoginId(expectedUser.loginId)
 
-        // then
-        assertThat(expectedUser).isEqualTo(expectedResult)
-        verify(exactly = 1) { loadUserPort.loadUserByLoginId(expectedUser.loginId) }
+            Then("조회되는 사용자가 있어야 한다") {
+                expectedUser shouldBe expectedResult
+                verify(exactly = 1) { loadUserPort.loadUserByLoginId(expectedUser.loginId) }
+            }
+        }
     }
 
-    @Test
-    fun `사용자 PK로 사용자 조회 실패 테스트`() {
-        // given
+    Given("존재하지 않는 사용자의 PK로 사용자를 조회하려는 상황에서") {
         val userId = 1L
+        every { loadUserPort.loadUserById(userId) } throws CustomException(USER_NOT_FOUND)
 
-        every { loadUserPort.loadUserById(userId) } throws CustomException(ErrorCode.USER_NOT_FOUND)
+        When("존재하지 않는 사용자의 PK로 조회를 시도하면") {
+            val exception = shouldThrow<CustomException> {
+                loadUserUseCase.loadUserById(userId)
+            }
 
-        // when
-        val exception = assertThatThrownBy { loadUserUseCase.loadUserById(userId) }
-
-        // then
-        exception.isInstanceOf(CustomException::class.java)
-        verify(exactly = 1) { loadUserPort.loadUserById(userId) }
+            Then("예외가 발생해야 한다") {
+                exception.errorCode shouldBe USER_NOT_FOUND
+                verify(exactly = 1) { loadUserPort.loadUserById(userId) }
+            }
+        }
     }
 
-    @Test
-    fun `사용자 로그인 아이디로 사용자 조회 실패 테스트`() {
-        // given
-        val loginId = "Josh"
+    Given("존재하지 않는 사용자 아이디로 사용자를 조회하려는 상황에서") {
+        val loginId = "OkestroUser"
+        every { loadUserPort.loadUserByLoginId(loginId) } throws CustomException(USER_NOT_FOUND)
 
-        every { loadUserPort.loadUserByLoginId(loginId) } throws CustomException(ErrorCode.USER_NOT_FOUND)
+        When("존재하지 않는 사용자의 아이디로 조회를 시도하면") {
+            val exception = shouldThrow<CustomException> {
+                loadUserUseCase.loadUserByLoginId(loginId)
+            }
 
-        // when
-        val exception = assertThatThrownBy { loadUserUseCase.loadUserByLoginId(loginId) }
-
-        // then
-        exception.isInstanceOf(CustomException::class.java)
-        verify(exactly = 1) { loadUserPort.loadUserByLoginId(loginId) }
+            Then("예외가 발생해야 한다") {
+                exception.errorCode shouldBe USER_NOT_FOUND
+                verify(exactly = 1) { loadUserPort.loadUserByLoginId(loginId) }
+            }
+        }
     }
-}
+})
