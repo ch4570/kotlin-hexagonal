@@ -118,3 +118,17 @@ t
 Dsrc/main/kotlin/com/okestro/kcredit/idp/common/utils/SecurityUtil.kt,2/0/20ed5459cfd23197fbbda5d2a83bd828f46d4700
 ò
 hsrc/test/kotlin/com/okestro/kcredit/idp/user/adapter/out/persistence/UserModifyPersistenceAdapterTest.kt,a/1/a193857e1b9a37be673b7f5f9e5297826adab0e7
+î
+dsrc/test/kotlin/com/okestro/kcredit/idp/user/adapter/out/persistence/UserRemovePersistenceAdapter.kt,f/6/f62d1c4e4285a4400f92b0a66044f7e7743a180f
+ò
+hsrc/test/kotlin/com/okestro/kcredit/idp/user/adapter/out/persistence/UserRemovePersistenceAdapterTest.kt,b/f/bfb121ec86f88a76aa581b7050d2bf1454b93b3b
+å
+\src/main/kotlin/com/okestro/kcredit/idp/user/adapter/out/persistence/entity/UserJpaEntity.kt,3/6/36f2c1f071cd500dbdfdc15c45f8c3f245312632
+u
+Esrc/test/kotlin/com/okestro/kcredit/idp/user/domain/UserDomainTest.kt,e/9/e935899aa8ccaef75a1b99d9a1e4cea3fb96994a
+ç
+]src/main/kotlin/com/okestro/kcredit/idp/ci/application/port/out/model/LoadPipeLineResponse.kt,8/0/807eb02a28b9e734e26fe7a9b54e76f11d58419a
+ç
+]src/main/kotlin/com/okestro/kcredit/idp/ci/application/port/in/usecase/LoadPipelineUseCase.kt,0/9/0976591a5f180d2f37f60af1b0f381be9472ee8f
+ç
+]src/main/kotlin/com/okestro/kcredit/idp/ci/application/port/in/usecase/ExecuteBuildUseCase.kt,7/8/78110db210b3bfc7e49c7ed61c107ff7cdf603c3

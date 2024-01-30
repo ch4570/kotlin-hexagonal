@@ -15,7 +15,7 @@ import io.mockk.verify
 import org.springframework.security.crypto.password.PasswordEncoder
 
 
-class ModifyUserUseCaseTest : BehaviorSpec({
+internal class ModifyUserUseCaseTest : BehaviorSpec({
 
     val fixture = kotlinFixture()
     val loadUserUseCase = mockk<LoadUserUseCase>()

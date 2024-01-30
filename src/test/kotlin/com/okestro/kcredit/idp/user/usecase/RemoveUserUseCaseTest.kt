@@ -13,7 +13,7 @@ import io.mockk.mockk
 import io.mockk.verify
 
 
-class RemoveUserUseCaseTest : BehaviorSpec({
+internal class RemoveUserUseCaseTest : BehaviorSpec({
 
     isolationMode = IsolationMode.InstancePerLeaf
 

@@ -14,7 +14,7 @@ import io.mockk.mockk
 import io.mockk.verify
 
 
-class RegisterUserUseCaseTest : BehaviorSpec({
+internal class RegisterUserUseCaseTest : BehaviorSpec({
 
     val registerUserPort = mockk<RegisterUserPort>()
     val passwordCrypto = mockk<PasswordCrypto>()

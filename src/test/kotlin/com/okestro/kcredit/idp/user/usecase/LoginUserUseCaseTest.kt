@@ -19,7 +19,7 @@ import io.mockk.verify
 import org.springframework.security.crypto.password.PasswordEncoder
 
 
-class LoginUserUseCaseTest : BehaviorSpec({
+internal class LoginUserUseCaseTest : BehaviorSpec({
 
     isolationMode = IsolationMode.InstancePerLeaf
 

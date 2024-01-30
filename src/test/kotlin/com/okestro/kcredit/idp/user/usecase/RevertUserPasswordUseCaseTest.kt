@@ -11,7 +11,7 @@ import io.kotest.matchers.shouldBe
 import io.mockk.*
 import org.springframework.security.crypto.password.PasswordEncoder
 
-class RevertUserPasswordUseCaseTest : BehaviorSpec({
+internal class RevertUserPasswordUseCaseTest : BehaviorSpec({
 
     val fixture = kotlinFixture()
     val revertUserPasswordPort = mockk<RevertUserPasswordPort>()

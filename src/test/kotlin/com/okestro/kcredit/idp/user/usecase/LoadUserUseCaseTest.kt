@@ -15,7 +15,7 @@ import io.mockk.mockk
 import io.mockk.verify
 
 
-class LoadUserUseCaseTest : BehaviorSpec({
+internal class LoadUserUseCaseTest : BehaviorSpec({
 
     isolationMode = IsolationMode.InstancePerLeaf
 
