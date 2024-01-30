@@ -1,6 +1,7 @@
 package com.okestro.kcredit.idp.user.usecase
 
 import com.appmattus.kotlinfixture.kotlinFixture
+import com.okestro.kcredit.idp.ci.common.util.PasswordCrypto
 import com.okestro.kcredit.idp.user.application.port.`in`.model.ModifyUserCommand
 import com.okestro.kcredit.idp.user.application.port.`in`.usecase.LoadUserUseCase
 import com.okestro.kcredit.idp.user.application.port.out.ModifyUserPort
@@ -18,7 +19,7 @@ class ModifyUserUseCaseTest : BehaviorSpec({
 
     val fixture = kotlinFixture()
     val loadUserUseCase = mockk<LoadUserUseCase>()
-    val passwordCrypto = mockk<PasswordEncoder>()
+    val passwordCrypto = mockk<PasswordCrypto>()
     val modifyUserPort = mockk<ModifyUserPort>()
     val modifyUserUseCase = ModifyUserService(loadUserUseCase, modifyUserPort, passwordCrypto)
 
@@ -26,7 +27,7 @@ class ModifyUserUseCaseTest : BehaviorSpec({
         val expectedUser = fixture<User>()
 
         every { loadUserUseCase.loadUserById(1L) } returns expectedUser
-        every { passwordCrypto.encode("1234") } returns "encryptedPassword"
+        every { passwordCrypto.encodePassword("1234") } returns "encryptedPassword"
 
         val userModifyCommand = fixture<ModifyUserCommand> {
             property<ModifyUserCommand, String>("loginPassword") { "1234" }
@@ -54,7 +55,7 @@ class ModifyUserUseCaseTest : BehaviorSpec({
                 expectedResult.name shouldBe expectedUser.name
                 expectedResult.department shouldBe expectedUser.department
                 verify { loadUserUseCase.loadUserById(1L) }
-                verify { passwordCrypto.encode("1234") }
+                verify { passwordCrypto.encodePassword("1234") }
             }
         }
     }

@@ -1,5 +1,6 @@
 package com.okestro.kcredit.idp.user.application.service
 
+import com.okestro.kcredit.idp.ci.common.util.PasswordCrypto
 import com.okestro.kcredit.idp.user.application.port.`in`.model.ModifyUserCommand
 import com.okestro.kcredit.idp.user.application.port.`in`.usecase.LoadUserUseCase
 import com.okestro.kcredit.idp.user.application.port.`in`.usecase.ModifyUserUseCase
@@ -14,13 +15,14 @@ import org.springframework.transaction.annotation.Transactional
 class ModifyUserService(
     private val loadUserUseCase: LoadUserUseCase,
     private val modifyUserPort: ModifyUserPort,
-    private val passwordCrypto: PasswordEncoder
+    private val passwordCrypto: PasswordCrypto
 ) : ModifyUserUseCase {
 
-    override fun modifyUser(userId: Long, userCommand: ModifyUserCommand): User {
+    override fun modifyUser(userId: Long, userCommand: ModifyUserCommand) : User {
         val user = loadUserUseCase.loadUserById(userId)
+
         user.updateUser(
-            loginPassword = passwordCrypto.encode(userCommand.loginPassword),
+            loginPassword = passwordCrypto.encodePassword(userCommand.loginPassword),
             name = userCommand.name,
             department = userCommand.department
         )

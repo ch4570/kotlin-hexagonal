@@ -1,5 +1,6 @@
 package com.okestro.kcredit.idp.user.adapter.out.persistence.adapter.command
 
+import com.okestro.kcredit.idp.ci.common.util.PasswordCrypto
 import com.okestro.kcredit.idp.common.annotation.PersistenceAdapter
 import com.okestro.kcredit.idp.user.adapter.out.persistence.entity.UserJpaEntity
 import com.okestro.kcredit.idp.user.adapter.out.persistence.mapper.UserMapper
@@ -13,13 +14,12 @@ import org.springframework.security.crypto.password.PasswordEncoder
 class UserCreatePersistenceAdapter(
     private val userRepository: UserRepository,
     private val userMapper: UserMapper,
-    private val passwordCrypto: PasswordEncoder,
 ) : RegisterUserPort {
 
     override fun registerUser(userCommand: RegisterUserCommand) : User {
         val userJpaEntity = UserJpaEntity(
             loginId = userCommand.loginId,
-            loginPassword = passwordCrypto.encode(userCommand.loginPassword),
+            loginPassword = userCommand.loginPassword,
             userName = userCommand.name,
             department = userCommand.department,
             role = userCommand.role

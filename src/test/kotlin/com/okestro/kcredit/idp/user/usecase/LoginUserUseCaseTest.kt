@@ -1,6 +1,7 @@
 package com.okestro.kcredit.idp.user.usecase
 
 import com.appmattus.kotlinfixture.kotlinFixture
+import com.okestro.kcredit.idp.ci.common.util.PasswordCrypto
 import com.okestro.kcredit.idp.common.exception.CustomException
 import com.okestro.kcredit.idp.common.exception.ErrorCode.*
 import com.okestro.kcredit.idp.common.utils.JwtUtil
@@ -25,8 +26,8 @@ class LoginUserUseCaseTest : BehaviorSpec({
     val fixture = kotlinFixture()
     val loadUserUseCase = mockk<LoadUserUseCase>()
     val jwtUtil = mockk<JwtUtil>()
-    val passwordCrypto = mockk<PasswordEncoder>()
-    val loginUserUseCase = LoginUserService(loadUserUseCase, passwordCrypto, jwtUtil)
+    val passwordCrypto = mockk<PasswordCrypto>()
+    val loginUserUseCase = LoginUserService(loadUserUseCase, jwtUtil, passwordCrypto)
 
 
     Given("올바른 아이디와 비밀번호로 사용자 로그인을 시도하려는 상황에서") {
@@ -34,7 +35,7 @@ class LoginUserUseCaseTest : BehaviorSpec({
         val loginUserCommand = fixture<LoginUserCommand>()
 
         every {
-            passwordCrypto.matches(loginUserCommand.loginPassword, expectedUser.loginPassword)
+            passwordCrypto.matchingPassword(loginUserCommand.loginPassword, expectedUser.loginPassword)
         } returns true
         every { loadUserUseCase.loadUserByLoginId(loginUserCommand.loginId) } returns expectedUser
         every { jwtUtil.generateToken(loginUserCommand.loginId, expectedUser.role) } returns "generatedToken"
@@ -46,7 +47,7 @@ class LoginUserUseCaseTest : BehaviorSpec({
                 expectedResult shouldBe "generatedToken"
 
                 verify(exactly = 1) {
-                    passwordCrypto.matches(loginUserCommand.loginPassword, expectedUser.loginPassword)
+                    passwordCrypto.matchingPassword(loginUserCommand.loginPassword, expectedUser.loginPassword)
                 }
                 verify(exactly = 1) { jwtUtil.generateToken(loginUserCommand.loginId, expectedUser.role) }
                 verify(exactly = 1) { loadUserUseCase.loadUserByLoginId(loginUserCommand.loginId) }
@@ -59,7 +60,7 @@ class LoginUserUseCaseTest : BehaviorSpec({
         val loginUserCommand = fixture<LoginUserCommand>()
 
         every {
-            passwordCrypto.matches(loginUserCommand.loginPassword, expectedUser.loginPassword)
+            passwordCrypto.matchingPassword(loginUserCommand.loginPassword, expectedUser.loginPassword)
         } returns false
 
         every { loadUserUseCase.loadUserByLoginId(loginUserCommand.loginId) } returns expectedUser

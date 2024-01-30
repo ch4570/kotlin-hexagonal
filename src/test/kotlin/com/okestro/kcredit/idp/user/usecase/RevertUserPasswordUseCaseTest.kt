@@ -1,6 +1,7 @@
 package com.okestro.kcredit.idp.user.usecase
 
 import com.appmattus.kotlinfixture.kotlinFixture
+import com.okestro.kcredit.idp.ci.common.util.PasswordCrypto
 import com.okestro.kcredit.idp.user.application.port.`in`.usecase.LoadUserUseCase
 import com.okestro.kcredit.idp.user.application.port.out.RevertUserPasswordPort
 import com.okestro.kcredit.idp.user.application.service.RevertUserPasswordService
@@ -15,7 +16,7 @@ class RevertUserPasswordUseCaseTest : BehaviorSpec({
     val fixture = kotlinFixture()
     val revertUserPasswordPort = mockk<RevertUserPasswordPort>()
     val loadUserUseCase = mockk<LoadUserUseCase>()
-    val passwordCrypto = mockk<PasswordEncoder>()
+    val passwordCrypto = mockk<PasswordCrypto>()
     val revertUserPasswordUseCase = RevertUserPasswordService(loadUserUseCase, revertUserPasswordPort, passwordCrypto)
 
 
@@ -24,7 +25,7 @@ class RevertUserPasswordUseCaseTest : BehaviorSpec({
         val loadUser = fixture<User>()
         every { loadUserUseCase.loadUserById(1L) } returns loadUser
         every { revertUserPasswordPort.revertUserPassword(1L, loadUser) } just Runs
-        every { passwordCrypto.encode("1234") } returns "encryptedPassword"
+        every { passwordCrypto.encodePassword("1234") } returns "encryptedPassword"
 
         When("비밀번호 초기화를 시도하면") {
             revertUserPasswordUseCase.revertUserPassword(userId)
@@ -33,7 +34,7 @@ class RevertUserPasswordUseCaseTest : BehaviorSpec({
                 loadUser.loginPassword shouldBe "encryptedPassword"
                 verify(exactly = 1) { loadUserUseCase.loadUserById(1L) }
                 verify(exactly = 1) { revertUserPasswordPort.revertUserPassword(1L, loadUser) }
-                verify(exactly = 1) { passwordCrypto.encode("1234") }
+                verify(exactly = 1) { passwordCrypto.encodePassword("1234") }
             }
         }
     }

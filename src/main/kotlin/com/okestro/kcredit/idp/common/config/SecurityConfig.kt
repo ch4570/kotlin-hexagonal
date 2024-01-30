@@ -24,27 +24,27 @@ class SecurityConfig(
     fun securityFilterChain(http: HttpSecurity) : SecurityFilterChain {
         return http
             .httpBasic { httpBasic ->
-                httpBasic.disable() }
+                httpBasic.disable()
+            }
             .csrf { csrf ->
-                csrf.disable() }
+                csrf.disable()
+            }
             .formLogin { formLogin ->
-                formLogin.disable() }
+                formLogin.disable()
+            }
             .sessionManagement { sessionManage ->
-                sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS) }
-            .authorizeHttpRequests {
-                request ->
+                sessionManage.sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+            }
+            .authorizeHttpRequests { request ->
                 request.requestMatchers("/api/gitlab/**").permitAll()
                 request.requestMatchers("/api/v1/**").permitAll()
                 request.requestMatchers(HttpMethod.POST, "/api/login").permitAll()
                 request.requestMatchers("/api/users").hasRole("INTEGRATE_ADMIN")
                 request.requestMatchers("/api/jenkins/**").hasAnyRole("INTEGRATE_ADMIN", "DEVELOPER")
-                request.anyRequest().authenticated() }
+                request.anyRequest().authenticated()
+            }
             .addFilterBefore(jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter::class.java)
             .addFilterBefore(jwtExceptionFilter, JwtAuthenticationFilter::class.java)
             .build()
     }
-
-    @Bean
-    fun passwordEncoder() =
-        PasswordEncoderFactories.createDelegatingPasswordEncoder()
 }
