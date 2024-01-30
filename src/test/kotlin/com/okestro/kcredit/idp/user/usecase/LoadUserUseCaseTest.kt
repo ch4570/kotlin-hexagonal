@@ -17,7 +17,7 @@ import io.mockk.verify
 
 class LoadUserUseCaseTest : BehaviorSpec({
 
-    isolationMode = IsolationMode.InstancePerTest
+    isolationMode = IsolationMode.InstancePerLeaf
 
     val fixture = kotlinFixture()
     val loadUserPort = mockk<LoadUserPort>()

@@ -20,7 +20,7 @@ import org.springframework.security.crypto.password.PasswordEncoder
 
 class LoginUserUseCaseTest : BehaviorSpec({
 
-    isolationMode = IsolationMode.InstancePerTest
+    isolationMode = IsolationMode.InstancePerLeaf
 
     val fixture = kotlinFixture()
     val loadUserUseCase = mockk<LoadUserUseCase>()
